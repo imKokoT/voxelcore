@@ -116,9 +116,11 @@ static bool initialize_gl(int width, int height) {
 
     const GLubyte* vendor = glGetString(GL_VENDOR);
     const GLubyte* renderer = glGetString(GL_RENDERER);
+    const GLubyte* glVersion = glGetString(GL_VERSION);
     logger.info() << "GL Vendor: " << reinterpret_cast<const char*>(vendor);
     logger.info() << "GL Renderer: " << reinterpret_cast<const char*>(renderer);
     logger.info() << "GLFW: " << glfwGetVersionString();
+    logger.info() << "GL: " << reinterpret_cast<const char*>(glVersion);
     return false;
 }
 
