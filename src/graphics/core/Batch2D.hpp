@@ -33,6 +33,7 @@ class Batch2D : public Flushable {
     const Texture* currentTexture;
     DrawPrimitive primitive = DrawPrimitive::triangle;
     UVRegion region {0.0f, 0.0f, 1.0f, 1.0f};
+    bool widelines = true;
 
     void setPrimitive(DrawPrimitive primitive);
 

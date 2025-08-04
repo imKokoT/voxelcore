@@ -18,6 +18,15 @@ Batch2D::Batch2D(size_t capacity) : capacity(capacity), color(1.0f){
     ImageData image(ImageFormat::rgba8888, 1, 1, pixels);
     blank = Texture::from(&image);
     currentTexture = nullptr;
+
+    // Wide lines have been deprecated for glLineWidth and generates GL:DEPRECATED_BEHAVIOR:MEDIUM
+    // for OpenGL 3.2+, so a little condition to disable wide lines. Besides, some GPU/drivers clamp
+    // line width to 1.0
+    int major = 0, minor = 0;
+    glGetIntegerv(GL_MAJOR_VERSION, &major);
+    glGetIntegerv(GL_MINOR_VERSION, &minor);
+    if (major >= 3 && minor >= 2)
+        widelines = false;
 }
 
 Batch2D::~Batch2D(){
@@ -378,14 +387,8 @@ void Batch2D::flush() {
 }
 
 void Batch2D::lineWidth(float width) {
-    // Wide lines have been deprecated for glLineWidth and generates GL:DEPRECATED_BEHAVIOR:MEDIUM
-    // for OpenGL 3.2+, so a little condition to disable wide lines. Besides, some GPU/drivers clamp
-    // line width to 1.0
-    int major = 0, minor = 0;
-    glGetIntegerv(GL_MAJOR_VERSION, &major);
-    glGetIntegerv(GL_MINOR_VERSION, &minor);
-    if (width > 1.0 && major >= 3 && minor >= 2)
-        width = 1.0;
-
-    glLineWidth(width);
+    if (widelines)
+        glLineWidth(width);
+    else
+        glLineWidth(1.0f);
 }

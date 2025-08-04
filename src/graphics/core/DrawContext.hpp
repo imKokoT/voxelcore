@@ -23,6 +23,7 @@ class DrawContext {
     BlendMode blendMode = BlendMode::normal;
     int scissorsCount = 0;
     float lineWidth = 1.0f;
+    bool widelines = true;
 public:
     DrawContext(
         const DrawContext* parent,
