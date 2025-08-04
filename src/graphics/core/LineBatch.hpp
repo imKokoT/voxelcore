@@ -25,6 +25,7 @@ class LineBatch : public Flushable {
     std::unique_ptr<LineVertex[]> buffer;
     size_t index;
     size_t capacity;
+    bool widelines = true;
 public:
     LineBatch(size_t capacity=4096);
     ~LineBatch();
